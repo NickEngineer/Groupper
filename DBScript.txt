@@ -1,0 +1,65 @@
+﻿/* создание таблицы пользователей*/
+CREATE TABLE USERT(
+USERT_ID NUMBER(5) NOT NULL,
+LOGIN VARCHAR2(50),
+PASS VARCHAR2(50),
+CONSTRAINT PK_USERT_ID PRIMARY KEY (USERT_ID));
+
+
+
+
+/* создание таблицы пользовательских групп*/
+CREATE TABLE USERS_GROUP(
+USERS_GROUP_ID NUMBER(9) NOT NULL,
+USER_ID NUMBER(5) NOT NULL,
+GROUP_ID NUMBER(5) NOT NULL,
+CONSTRAINT PK_USERS_GROUP_ID  PRIMARY KEY (USERS_GROUP_ID ),
+CONSTRAINT FK_USERT_ID  FOREIGN KEY (USERT_ID) REFERENCES USERT(USERT_ID)),
+CONSTRAINT FK_GROUPT_ID FOREIGN KEY (GROUPT_ID) REFERENCES GROUPT(GROUPT_ID));
+
+
+
+
+/* создание таблицы групп*/
+CREATE TABLE GROUPT(
+GROUPT_ID NUMBER(5) NOT NULL,
+NAME VARCHAR2(50),
+DESCRIPT VARCHAR2(250),
+CONSTRAINT PK_GROUPT_ID PRIMARY KEY (GROUPT_ID);
+
+
+
+
+/* создание процедуры изменения (редактирования) пользователя*/
+CREATE OR REPLACE PROCEDURE edit_user (id NUMBER, loginU VARCHAR2, password VARCHAR2) IS
+BEGIN
+
+
+UPDATE USERT
+    SET LOGIN = loginU ,
+    PASS = password
+    WHERE USERT_ID = id;
+
+
+END edit_user;
+
+
+
+
+EXEC edit_user(2, ’user’,’pass’);
+
+
+
+
+/* создание процедуры изменения (редактирования) группы*/
+create or replace PROCEDURE edit_group (id NUMBER, groupName VARCHAR2, grupDescription VARCHAR2) IS
+BEGIN
+
+
+UPDATE GROUPT
+    SET NAME = groupName ,
+    DESCRIPT = grupDescription
+    WHERE GROUPT_ID = id;
+
+
+END edit_group;
